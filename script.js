@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
   updateTimeline();
 
   // ---------- Dot navigation (right side progress) ----------
-  const sections = ['hero', 'about', 'parcours', 'skills', 'projects', 'contact'];
+  const sections = ['hero', 'about', 'parcours', 'skills', 'projects', 'certifications', 'contact'];
   const dotLinks = document.querySelectorAll('.dot-nav a');
   function updateDotNav() {
     let current = sections[0];
@@ -48,17 +48,47 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('scroll', updateDotNav);
   updateDotNav();
 
-  // ---------- Project filters ----------
-  const filterBtns = document.querySelectorAll('.filter-btn');
+  // ---------- Carousel thumbnails ----------
+  const thumbs = document.querySelectorAll('.proj-thumb');
   const projectBlocks = document.querySelectorAll('.project-block');
+
+  thumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      const targetId = thumb.dataset.target;
+      const targetBlock = document.getElementById(targetId);
+      const isAlreadyOpen = targetBlock && targetBlock.classList.contains('project-block--open');
+
+      projectBlocks.forEach(b => b.classList.remove('project-block--open'));
+      thumbs.forEach(t => t.classList.remove('active'));
+
+      if (!isAlreadyOpen && targetBlock) {
+        targetBlock.classList.add('project-block--open');
+        thumb.classList.add('active');
+        setTimeout(() => {
+          targetBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 80);
+      }
+    });
+  });
+
+  // ---------- Project filters (carousel) ----------
+  const filterBtns = document.querySelectorAll('.filter-btn');
+
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const cat = btn.dataset.filter;
-      projectBlocks.forEach(block => {
-        const cats = block.dataset.cat || '';
-        block.classList.toggle('hidden', cat !== 'all' && !cats.includes(cat));
+
+      // Close any open project block
+      projectBlocks.forEach(b => b.classList.remove('project-block--open'));
+      thumbs.forEach(t => t.classList.remove('active'));
+
+      // Show/hide thumbnails
+      thumbs.forEach(thumb => {
+        const cats = thumb.dataset.cat || '';
+        const hide = cat !== 'all' && !cats.includes(cat);
+        thumb.classList.toggle('proj-thumb--hidden', hide);
       });
     });
   });
