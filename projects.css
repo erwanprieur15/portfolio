@@ -1390,6 +1390,8 @@
 
 .fi-context-note svg {
   flex-shrink: 0;
+  width: 16px;
+  height: 16px;
   margin-top: 2px;
   color: var(--fi-sky);
 }
@@ -1657,6 +1659,8 @@
 
 .ff-context-note svg {
   flex-shrink: 0;
+  width: 16px;
+  height: 16px;
   margin-top: 2px;
   color: var(--ff-green);
 }
@@ -1761,4 +1765,3 @@
     font-size: 28px;
   }
 }
-
