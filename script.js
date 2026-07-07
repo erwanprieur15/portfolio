@@ -48,6 +48,26 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('scroll', updateDotNav);
   updateDotNav();
 
+  // ---------- Inject "back to carousel" CTA in every project block ----------
+  document.querySelectorAll('.project-block').forEach(block => {
+    if (block.querySelector('.proj-back-cta')) return;
+    const cta = document.createElement('div');
+    cta.className = 'proj-back-cta';
+    cta.innerHTML = `
+      <button class="proj-back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="18 15 12 9 6 15"/></svg>
+        Voir d'autres projets
+      </button>`;
+    cta.querySelector('.proj-back-btn').addEventListener('click', () => {
+      const carousel = document.querySelector('.proj-carousel');
+      if (!carousel) return;
+      const navHeight = document.querySelector('.nav')?.offsetHeight || 64;
+      const top = carousel.getBoundingClientRect().top + window.pageYOffset - navHeight - 24;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+    block.appendChild(cta);
+  });
+
   // ---------- Carousel thumbnails ----------
   const thumbs = document.querySelectorAll('.proj-thumb');
   const projectBlocks = document.querySelectorAll('.project-block');
@@ -64,9 +84,13 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!isAlreadyOpen && targetBlock) {
         targetBlock.classList.add('project-block--open');
         thumb.classList.add('active');
+        // Wait for CSS transition (max-height 0.6s) before scrolling,
+        // and offset by sticky nav height so the block top isn't hidden.
         setTimeout(() => {
-          targetBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 80);
+          const navHeight = document.querySelector('.nav')?.offsetHeight || 64;
+          const top = targetBlock.getBoundingClientRect().top + window.pageYOffset - navHeight - 24;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }, 650);
       }
     });
   });
@@ -90,6 +114,29 @@ document.addEventListener('DOMContentLoaded', function () {
         const hide = cat !== 'all' && !cats.includes(cat);
         thumb.classList.toggle('proj-thumb--hidden', hide);
       });
+    });
+  });
+
+  // ---------- Certifications accordion ----------
+  const certToggles = document.querySelectorAll('.cert-toggle');
+  certToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const platform = toggle.closest('.cert-platform');
+      const cards = platform.querySelector('.cert-cards');
+      const isOpen = platform.classList.contains('cert-platform--open');
+      // Close all
+      document.querySelectorAll('.cert-platform').forEach(p => {
+        p.classList.remove('cert-platform--open');
+        p.querySelector('.cert-cards').classList.add('cert-cards--collapsed');
+      });
+      // Open clicked if it was closed
+      if (!isOpen) {
+        platform.classList.add('cert-platform--open');
+        cards.classList.remove('cert-cards--collapsed');
+      }
+    });
+    toggle.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.click(); }
     });
   });
 
