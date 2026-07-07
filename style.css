@@ -123,6 +123,8 @@ a { color: inherit; }
   margin-bottom: 22px;
 }
 .hero-dot { width: 7px; height: 7px; border-radius: 50%; background: #34c759; }
+.hero-badge-link { color: inherit; text-decoration: none; transition: color 0.2s; }
+.hero-badge-link:hover { color: var(--c-accent); }
 .hero-name { font-size: clamp(36px, 6vw, 52px); font-weight: 600; line-height: 1.1; margin-bottom: 8px; letter-spacing: -0.01em; }
 .hero-title { font-size: 14px; color: var(--c-text-soft); letter-spacing: 0.02em; margin-bottom: 20px; }
 .hero-pitch { font-size: 17px; color: var(--c-text-soft); max-width: 480px; margin: 0 auto 32px; line-height: 1.6; }
@@ -376,6 +378,37 @@ a { color: inherit; }
 }
 .project-block--collapsed { display: block; }
 
+/* ============ PROJET — CTA retour carrousel ============ */
+.proj-back-cta {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0 8px;
+}
+.proj-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 22px;
+  border-radius: 24px;
+  border: 0.5px solid var(--c-border);
+  background: white;
+  color: var(--c-text-soft);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-main);
+  transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.proj-back-btn:hover {
+  background: var(--c-text);
+  color: white;
+  border-color: var(--c-text);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+.proj-back-btn svg { transition: stroke 0.2s; }
+.proj-back-btn:hover svg { stroke: white; }
+
 /* ============ CERTIFICATIONS ============ */
 .cert-platform {
   margin-top: 48px;
@@ -385,7 +418,21 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 0.5px solid var(--c-border);
+  background: white;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  user-select: none;
+}
+.cert-platform-header:hover {
+  background: var(--c-bg-soft);
+}
+.cert-platform--open .cert-platform-header {
+  background: var(--c-bg-soft);
+  border-radius: 14px 14px 0 0;
+  border-bottom-color: transparent;
 }
 .cert-logo-wrap {
   width: 32px;
@@ -408,12 +455,33 @@ a { color: inherit; }
   padding: 2px 10px;
   border-radius: 10px;
   border: 0.5px solid var(--c-border);
+  margin-left: 2px;
+}
+.cert-chevron {
+  margin-left: auto;
+  color: var(--c-text-soft);
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(.22,1,.36,1);
+}
+.cert-platform--open .cert-chevron {
+  transform: rotate(180deg);
 }
 
 .cert-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 10px;
+  overflow: hidden;
+  max-height: 2000px;
+  padding: 12px 0 4px;
+  transition: max-height 0.5s cubic-bezier(.22,1,.36,1), opacity 0.3s ease, padding 0.3s ease;
+  opacity: 1;
+}
+.cert-cards--collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .cert-card {
@@ -462,21 +530,113 @@ a { color: inherit; }
 }
 
 /* ============ CONTACT ============ */
-.contact-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.contact-left .s-title { margin-bottom: 16px; }
+.contact-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+}
+.contact-avail {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--c-text-soft);
+}
+.contact-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--c-text-soft);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-location:hover { color: var(--c-accent); }
+.contact-location svg { color: inherit; flex-shrink: 0; }
+
+.contact-right { display: flex; flex-direction: column; align-items: center; }
+.contact-cta-primary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 24px;
+  border-radius: 20px;
+  background: var(--c-text);
+  color: white;
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s, transform 0.25s cubic-bezier(.22,1,.36,1);
+  margin-bottom: 12px;
+  width: 100%;
+}
+.contact-cta-primary:hover {
+  background: white;
+  color: var(--c-text);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 0 1.5px var(--c-text);
+}
+.contact-cta-label {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.65;
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.contact-cta-value {
+  font-size: 15px;
+  font-weight: 500;
+  display: block;
+  line-height: 1;
+}
+.contact-cta-arrow { margin-left: auto; flex-shrink: 0; opacity: 0.7; }
+
+.contact-secondary-links { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 .contact-link {
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 12px 20px;
+  padding: 11px 18px;
   border-radius: 24px;
-  border: 0.5px solid #c7c7cc;
+  border: 0.5px solid var(--c-border);
   font-size: 14px;
   text-decoration: none;
-  background: white;
-  transition: background 0.2s;
+  background: var(--c-bg-soft);
+  color: var(--c-text-soft);
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
 }
-.contact-link:hover { background: var(--c-bg-soft); }
-.contact-link svg { width: 17px; height: 17px; color: var(--c-text-soft); }
+.contact-link:hover { transform: scale(1.1); }
+.contact-link svg {
+  width: 16px; height: 16px;
+  color: var(--c-text-soft);
+  transition: color 0.2s;
+}
+/* Téléphone → vert */
+.contact-link[href^="tel"]:hover {
+  background: #f0faf3;
+  color: #1a7a4a;
+  border-color: #1a7a4a;
+}
+.contact-link[href^="tel"]:hover svg { color: #1a7a4a; }
+/* LinkedIn → bleu */
+.contact-link[href*="linkedin"]:hover {
+  background: #e8f2fb;
+  color: #0077B5;
+  border-color: #0077B5;
+}
+.contact-link[href*="linkedin"]:hover svg { color: #0077B5; }
+
+@media (max-width: 760px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+  .contact-cta-value { font-size: 13px; }
+}
 
 /* ============ FOOTER ============ */
 .footer {
