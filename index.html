@@ -40,6 +40,7 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-avatar reveal">
     <img src="images/photo-erwan.jpg" alt="Erwan Prieur">
   </div>
@@ -62,7 +63,7 @@
 </section>
 
 <!-- ============ À PROPOS ============ -->
-<section class="section section-border-top" id="about">
+<section class="section" id="about">
   <p class="s-tag reveal">À propos</p>
   <h2 class="s-title reveal reveal-d1">Issu de la génération digitale</h2>
   <p class="s-sub reveal reveal-d2">
@@ -1046,445 +1047,188 @@
     Certifications obtenues en autonomie et en formation sur les outils clés du marketing digital, de la data et du développement web.
   </p>
 
-  <!-- Google -->
-  <div class="cert-platform reveal reveal-d3">
-    <div class="cert-platform-header cert-toggle" role="button" tabindex="0">
-      <div class="cert-logo-wrap" style="background:#f1f3f4;">
-        <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-        </svg>
+  <!-- Fan gallery -->
+  <div class="cert-gallery reveal reveal-d3">
+    <div class="cert-fan" id="cert-fan">
+
+      <!-- Google -->
+      <div class="cert-fan-card" data-platform="google"
+           style="--fan-x:-240px;--fan-y:20px;--fan-rot:-3.5deg;--fan-z:20;--fan-delay:0s;--fan-col:#4285F4;">
+        <div class="cert-fan-logo" style="background:#f1f3f4;">
+          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+        </div>
+        <p class="cert-fan-name">Google</p>
+        <span class="cert-fan-count">10</span>
       </div>
-      <span class="cert-platform-name">Google</span>
-      <span class="cert-platform-count">10 certifications</span>
-      <svg class="cert-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+
+      <!-- HubSpot -->
+      <div class="cert-fan-card" data-platform="hubspot"
+           style="--fan-x:-160px;--fan-y:35px;--fan-rot:-2deg;--fan-z:30;--fan-delay:0.08s;--fan-col:#FF7A59;">
+        <div class="cert-fan-logo" style="background:#fff3f0;">
+          <svg width="24" height="24" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="20" fill="#FF7A59"/>
+            <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="11" fill="white">HS</text>
+          </svg>
+        </div>
+        <p class="cert-fan-name">HubSpot</p>
+        <span class="cert-fan-count">6</span>
+      </div>
+
+      <!-- SEMrush -->
+      <div class="cert-fan-card" data-platform="semrush"
+           style="--fan-x:-80px;--fan-y:10px;--fan-rot:-1deg;--fan-z:40;--fan-delay:0.14s;--fan-col:#FF642D;">
+        <div class="cert-fan-logo" style="background:#fff5e6;">
+          <svg width="24" height="24" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="20" fill="#FF642D"/>
+            <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="10" fill="white">SEM</text>
+          </svg>
+        </div>
+        <p class="cert-fan-name">SEMrush</p>
+        <span class="cert-fan-count">1</span>
+      </div>
+
+      <!-- OpenClassrooms -->
+      <div class="cert-fan-card" data-platform="openclassrooms"
+           style="--fan-x:0px;--fan-y:28px;--fan-rot:0deg;--fan-z:50;--fan-delay:0.18s;--fan-col:#7451EB;">
+        <div class="cert-fan-logo" style="background:#f0ebff;">
+          <svg width="24" height="24" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="20" fill="#7451EB"/>
+            <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="14" fill="white">OC</text>
+          </svg>
+        </div>
+        <p class="cert-fan-name">OpenClassrooms</p>
+        <span class="cert-fan-count">17</span>
+      </div>
+
+      <!-- SoloLearn -->
+      <div class="cert-fan-card" data-platform="sololearn"
+           style="--fan-x:80px;--fan-y:8px;--fan-rot:1deg;--fan-z:40;--fan-delay:0.14s;--fan-col:#149EF2;">
+        <div class="cert-fan-logo" style="background:#e8f4fe;">
+          <svg width="24" height="24" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="20" fill="#149EF2"/>
+            <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="13" fill="white">SL</text>
+          </svg>
+        </div>
+        <p class="cert-fan-name">SoloLearn</p>
+        <span class="cert-fan-count">4</span>
+      </div>
+
+      <!-- TOEIC -->
+      <div class="cert-fan-card" data-platform="toeic"
+           style="--fan-x:160px;--fan-y:38px;--fan-rot:2deg;--fan-z:30;--fan-delay:0.08s;--fan-col:#1a7a4a;">
+        <div class="cert-fan-logo" style="background:#e8f5e9;">
+          <svg width="24" height="24" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="20" fill="#1a7a4a"/>
+            <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="11" fill="white">ETS</text>
+          </svg>
+        </div>
+        <p class="cert-fan-name">TOEIC</p>
+        <span class="cert-fan-count">1</span>
+      </div>
+
+      <!-- NEXT-U -->
+      <div class="cert-fan-card" data-platform="nextu"
+           style="--fan-x:240px;--fan-y:16px;--fan-rot:3.5deg;--fan-z:20;--fan-delay:0s;--fan-col:#1d1d1f;">
+        <div class="cert-fan-logo" style="background:#f5f5f7;">
+          <svg width="24" height="24" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="20" fill="#1d1d1f"/>
+            <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="15" fill="white">N</text>
+          </svg>
+        </div>
+        <p class="cert-fan-name">NEXT-U</p>
+        <span class="cert-fan-count">1</span>
+      </div>
+
     </div>
-    <div class="cert-cards cert-cards--collapsed">
-      <div class="cert-card" style="--cert-color:#4285F4;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Google Ads</p>
-          <p class="cert-card-title">Publicité sur le Réseau Display</p>
-          <p class="cert-card-date">Mars 2022</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#4285F4;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Google Ads</p>
-          <p class="cert-card-title">Annonces Shopping</p>
-          <p class="cert-card-date">Avr. 2022</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#4285F4;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Google Ads</p>
-          <p class="cert-card-title">Mesures Google Ads</p>
-          <p class="cert-card-date">Avr. 2022</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#4285F4;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Google Ads</p>
-          <p class="cert-card-title">Publicité vidéo</p>
-          <p class="cert-card-date">Avr. 2022</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#4285F4;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Google Ads</p>
-          <p class="cert-card-title">Réseau de Recherche</p>
-          <p class="cert-card-date">Avr. 2022</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#4285F4;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Google Ads</p>
-          <p class="cert-card-title">Applications</p>
-          <p class="cert-card-date">Avr. 2022</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#E37400;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Google Analytics</p>
-          <p class="cert-card-title">Analytics pour les débutants</p>
-          <p class="cert-card-date">2022</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#E37400;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Google Analytics</p>
-          <p class="cert-card-title">Analytics avancé</p>
-          <p class="cert-card-date">2022</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#34A853;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Google Digital Garage</p>
-          <p class="cert-card-title">Fondamentaux du marketing numérique</p>
-          <p class="cert-card-date">Fév. 2021</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#4285F4;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Google Tag Manager</p>
-          <p class="cert-card-title">Principes de base de Google Tag Manager</p>
-          <p class="cert-card-date">2024</p>
-        </div>
-      </div>
-    </div>
+    <p class="cert-hint">Clique sur un logo pour voir les certifications</p>
   </div>
 
-  <!-- HubSpot -->
-  <div class="cert-platform reveal">
-    <div class="cert-platform-header cert-toggle" role="button" tabindex="0">
-      <div class="cert-logo-wrap" style="background:#fff3f0;">
-        <svg width="18" height="18" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="20" r="20" fill="#FF7A59"/>
-          <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="11" fill="white">HS</text>
-        </svg>
+  <!-- Expandable certifications panel -->
+  <div class="cert-panel" id="cert-panel">
+    <div class="cert-panel-top">
+      <div class="cert-panel-meta">
+        <div class="cert-panel-icon" id="cert-panel-icon"></div>
+        <div>
+          <p class="cert-panel-title" id="cert-panel-title"></p>
+          <p class="cert-panel-sub" id="cert-panel-sub"></p>
+        </div>
       </div>
-      <span class="cert-platform-name">HubSpot Academy</span>
-      <span class="cert-platform-count">6 certifications</span>
-      <svg class="cert-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      <button class="cert-panel-close" id="cert-panel-close" aria-label="Fermer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-    <div class="cert-cards cert-cards--collapsed">
-      <div class="cert-card" style="--cert-color:#FF7A59;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Marketing</p>
-          <p class="cert-card-title">Content Marketing</p>
-          <p class="cert-card-date">Juin 2023</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#FF7A59;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Marketing</p>
-          <p class="cert-card-title">Email Marketing</p>
-          <p class="cert-card-date">Juin 2023</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#FF7A59;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Marketing</p>
-          <p class="cert-card-title">Inbound Marketing</p>
-          <p class="cert-card-date">Juin 2023</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#FF7A59;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Marketing</p>
-          <p class="cert-card-title">Social Media</p>
-          <p class="cert-card-date">Juin 2023</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#FF7A59;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Design & Web</p>
-          <p class="cert-card-title">Growth-Driven Design</p>
-          <p class="cert-card-date">Juin 2023</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#FF7A59;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Revenue</p>
-          <p class="cert-card-title">Revenue Operations</p>
-          <p class="cert-card-date">Juin 2023</p>
-        </div>
-      </div>
-    </div>
+    <div class="cert-panel-cards" id="cert-panel-cards"></div>
   </div>
 
-  <!-- SEMrush -->
-  <div class="cert-platform reveal">
-    <div class="cert-platform-header cert-toggle" role="button" tabindex="0">
-      <div class="cert-logo-wrap" style="background:#fff5e6;">
-        <svg width="18" height="18" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="20" r="20" fill="#FF642D"/>
-          <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="10" fill="white">SEM</text>
-        </svg>
-      </div>
-      <span class="cert-platform-name">SEMrush Academy</span>
-      <span class="cert-platform-count">1 certification</span>
-      <svg class="cert-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </div>
-    <div class="cert-cards cert-cards--collapsed">
-      <div class="cert-card" style="--cert-color:#FF642D;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">SEO</p>
-          <p class="cert-card-title">Cours accéléré SEO avec Brian Dean</p>
-          <p class="cert-card-date">Juin 2023</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Hidden cert data store -->
+  <div id="cert-store" style="display:none;" aria-hidden="true">
 
-  <!-- OpenClassrooms -->
-  <div class="cert-platform reveal">
-    <div class="cert-platform-header cert-toggle" role="button" tabindex="0">
-      <div class="cert-logo-wrap" style="background:#f0ebff;">
-        <svg width="18" height="18" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="20" r="20" fill="#7451EB"/>
-          <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="14" fill="white">OC</text>
-        </svg>
-      </div>
-      <span class="cert-platform-name">OpenClassrooms</span>
-      <span class="cert-platform-count">17 certifications</span>
-      <svg class="cert-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    <div data-platform="google">
+      <div class="cert-card" style="--cert-color:#4285F4;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Google Ads</p><p class="cert-card-title">Publicité sur le Réseau Display</p><p class="cert-card-date">Mars 2022</p></div></div>
+      <div class="cert-card" style="--cert-color:#4285F4;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Google Ads</p><p class="cert-card-title">Annonces Shopping</p><p class="cert-card-date">Avr. 2022</p></div></div>
+      <div class="cert-card" style="--cert-color:#4285F4;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Google Ads</p><p class="cert-card-title">Mesures Google Ads</p><p class="cert-card-date">Avr. 2022</p></div></div>
+      <div class="cert-card" style="--cert-color:#4285F4;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Google Ads</p><p class="cert-card-title">Publicité vidéo</p><p class="cert-card-date">Avr. 2022</p></div></div>
+      <div class="cert-card" style="--cert-color:#4285F4;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Google Ads</p><p class="cert-card-title">Réseau de Recherche</p><p class="cert-card-date">Avr. 2022</p></div></div>
+      <div class="cert-card" style="--cert-color:#4285F4;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Google Ads</p><p class="cert-card-title">Applications</p><p class="cert-card-date">Avr. 2022</p></div></div>
+      <div class="cert-card" style="--cert-color:#E37400;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Google Analytics</p><p class="cert-card-title">Analytics pour les débutants</p><p class="cert-card-date">2022</p></div></div>
+      <div class="cert-card" style="--cert-color:#E37400;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Google Analytics</p><p class="cert-card-title">Analytics avancé</p><p class="cert-card-date">2022</p></div></div>
+      <div class="cert-card" style="--cert-color:#34A853;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Google Digital Garage</p><p class="cert-card-title">Fondamentaux du marketing numérique</p><p class="cert-card-date">Fév. 2021</p></div></div>
+      <div class="cert-card" style="--cert-color:#4285F4;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Google Tag Manager</p><p class="cert-card-title">Principes de base de Google Tag Manager</p><p class="cert-card-date">2024</p></div></div>
     </div>
-    <div class="cert-cards cert-cards--collapsed">
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">E-commerce</p>
-          <p class="cert-card-title">Préparer son projet e-commerce</p>
-          <p class="cert-card-date">Juin 2021</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">E-commerce</p>
-          <p class="cert-card-title">Créer son site</p>
-          <p class="cert-card-date">Juin 2021</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">E-commerce</p>
-          <p class="cert-card-title">Générer du trafic sur son site</p>
-          <p class="cert-card-date">Juin 2021</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">E-commerce</p>
-          <p class="cert-card-title">Optimiser sa conversion</p>
-          <p class="cert-card-date">Juin 2021</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">E-commerce</p>
-          <p class="cert-card-title">Piloter sa performance</p>
-          <p class="cert-card-date">Juin 2021</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Gestion de projet</p>
-          <p class="cert-card-title">Analysez les risques de votre projet</p>
-          <p class="cert-card-date">Juin 2023</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Data / Analytics</p>
-          <p class="cert-card-title">Comprenez votre audience avec Google Analytics</p>
-          <p class="cert-card-date">Janv. 2024</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Data / Big Data</p>
-          <p class="cert-card-title">Concevez des architectures Big Data</p>
-          <p class="cert-card-date">Janv. 2024</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Data</p>
-          <p class="cert-card-title">Réalisez des dashboards avec Power BI</p>
-          <p class="cert-card-date">Fév. 2024</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Data</p>
-          <p class="cert-card-title">Réalisez un dashboard avec Tableau</p>
-          <p class="cert-card-date">Fév. 2024</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Data</p>
-          <p class="cert-card-title">Initiez-vous à la gouvernance des données</p>
-          <p class="cert-card-date">Mars 2024</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Gestion de projet</p>
-          <p class="cert-card-title">Construisez votre roadmap produit</p>
-          <p class="cert-card-date">Janv. 2024</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Gestion de projet</p>
-          <p class="cert-card-title">Lancez votre projet innovant</p>
-          <p class="cert-card-date">Janv. 2024</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Gestion de projet</p>
-          <p class="cert-card-title">Testez vos idées avec le lean prototyping</p>
-          <p class="cert-card-date">Janv. 2024</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Business</p>
-          <p class="cert-card-title">Construisez un business plan</p>
-          <p class="cert-card-date">Janv. 2024</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Business</p>
-          <p class="cert-card-title">Gérez votre trésorerie</p>
-          <p class="cert-card-date">Janv. 2024</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#7451EB;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Growth</p>
-          <p class="cert-card-title">Accélérez la croissance avec le growth hacking</p>
-          <p class="cert-card-date">Janv. 2024</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- SoloLearn -->
-  <div class="cert-platform reveal">
-    <div class="cert-platform-header cert-toggle" role="button" tabindex="0">
-      <div class="cert-logo-wrap" style="background:#e8f4fe;">
-        <svg width="18" height="18" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="20" r="20" fill="#149EF2"/>
-          <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="13" fill="white">SL</text>
-        </svg>
-      </div>
-      <span class="cert-platform-name">SoloLearn</span>
-      <span class="cert-platform-count">4 certifications</span>
-      <svg class="cert-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    <div data-platform="hubspot">
+      <div class="cert-card" style="--cert-color:#FF7A59;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Marketing</p><p class="cert-card-title">Content Marketing</p><p class="cert-card-date">Juin 2023</p></div></div>
+      <div class="cert-card" style="--cert-color:#FF7A59;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Marketing</p><p class="cert-card-title">Email Marketing</p><p class="cert-card-date">Juin 2023</p></div></div>
+      <div class="cert-card" style="--cert-color:#FF7A59;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Marketing</p><p class="cert-card-title">Inbound Marketing</p><p class="cert-card-date">Juin 2023</p></div></div>
+      <div class="cert-card" style="--cert-color:#FF7A59;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Marketing</p><p class="cert-card-title">Social Media</p><p class="cert-card-date">Juin 2023</p></div></div>
+      <div class="cert-card" style="--cert-color:#FF7A59;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Design &amp; Web</p><p class="cert-card-title">Growth-Driven Design</p><p class="cert-card-date">Juin 2023</p></div></div>
+      <div class="cert-card" style="--cert-color:#FF7A59;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Revenue</p><p class="cert-card-title">Revenue Operations</p><p class="cert-card-date">Juin 2023</p></div></div>
     </div>
-    <div class="cert-cards cert-cards--collapsed">
-      <div class="cert-card" style="--cert-color:#149EF2;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Développement web</p>
-          <p class="cert-card-title">HTML</p>
-          <p class="cert-card-date">Nov. 2019</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#149EF2;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Développement web</p>
-          <p class="cert-card-title">CSS</p>
-          <p class="cert-card-date">Nov. 2019</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#149EF2;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Développement web</p>
-          <p class="cert-card-title">JavaScript</p>
-          <p class="cert-card-date">Fév. 2021</p>
-        </div>
-      </div>
-      <div class="cert-card" style="--cert-color:#149EF2;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Développement web</p>
-          <p class="cert-card-title">jQuery</p>
-          <p class="cert-card-date">Fév. 2021</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- TOEIC -->
-  <div class="cert-platform reveal">
-    <div class="cert-platform-header cert-toggle" role="button" tabindex="0">
-      <div class="cert-logo-wrap" style="background:#e8f5e9;">
-        <svg width="18" height="18" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="20" r="20" fill="#1a7a4a"/>
-          <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="11" fill="white">ETS</text>
-        </svg>
-      </div>
-      <span class="cert-platform-name">TOEIC — ETS</span>
-      <span class="cert-platform-count">1 certification</span>
-      <svg class="cert-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    <div data-platform="semrush">
+      <div class="cert-card" style="--cert-color:#FF642D;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">SEO</p><p class="cert-card-title">Cours accéléré SEO avec Brian Dean</p><p class="cert-card-date">Juin 2023</p></div></div>
     </div>
-    <div class="cert-cards cert-cards--collapsed">
-      <div class="cert-card" style="--cert-color:#1a7a4a;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Langue</p>
-          <p class="cert-card-title">TOEIC Listening & Reading — 765/990</p>
-          <p class="cert-card-date">Avr. 2024 · valide jusqu'en avr. 2026</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- NEXT-U MBA -->
-  <div class="cert-platform reveal">
-    <div class="cert-platform-header cert-toggle" role="button" tabindex="0">
-      <div class="cert-logo-wrap" style="background:#f5f5f7;">
-        <svg width="18" height="18" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="20" r="20" fill="#1d1d1f"/>
-          <text x="20" y="26" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="700" font-size="15" fill="white">N</text>
-        </svg>
-      </div>
-      <span class="cert-platform-name">NEXT-U — MBA</span>
-      <span class="cert-platform-count">1 certification</span>
-      <svg class="cert-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    <div data-platform="openclassrooms">
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">E-commerce</p><p class="cert-card-title">Préparer son projet e-commerce</p><p class="cert-card-date">Juin 2021</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">E-commerce</p><p class="cert-card-title">Créer son site</p><p class="cert-card-date">Juin 2021</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">E-commerce</p><p class="cert-card-title">Générer du trafic sur son site</p><p class="cert-card-date">Juin 2021</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">E-commerce</p><p class="cert-card-title">Optimiser sa conversion</p><p class="cert-card-date">Juin 2021</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">E-commerce</p><p class="cert-card-title">Piloter sa performance</p><p class="cert-card-date">Juin 2021</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Gestion de projet</p><p class="cert-card-title">Analysez les risques de votre projet</p><p class="cert-card-date">Juin 2023</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Data / Analytics</p><p class="cert-card-title">Comprenez votre audience avec Google Analytics</p><p class="cert-card-date">Janv. 2024</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Data / Big Data</p><p class="cert-card-title">Concevez des architectures Big Data</p><p class="cert-card-date">Janv. 2024</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Data</p><p class="cert-card-title">Réalisez des dashboards avec Power BI</p><p class="cert-card-date">Fév. 2024</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Data</p><p class="cert-card-title">Réalisez un dashboard avec Tableau</p><p class="cert-card-date">Fév. 2024</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Data</p><p class="cert-card-title">Initiez-vous à la gouvernance des données</p><p class="cert-card-date">Mars 2024</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Gestion de projet</p><p class="cert-card-title">Construisez votre roadmap produit</p><p class="cert-card-date">Janv. 2024</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Gestion de projet</p><p class="cert-card-title">Lancez votre projet innovant</p><p class="cert-card-date">Janv. 2024</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Gestion de projet</p><p class="cert-card-title">Testez vos idées avec le lean prototyping</p><p class="cert-card-date">Janv. 2024</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Business</p><p class="cert-card-title">Construisez un business plan</p><p class="cert-card-date">Janv. 2024</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Business</p><p class="cert-card-title">Gérez votre trésorerie</p><p class="cert-card-date">Janv. 2024</p></div></div>
+      <div class="cert-card" style="--cert-color:#7451EB;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Growth</p><p class="cert-card-title">Accélérez la croissance avec le growth hacking</p><p class="cert-card-date">Janv. 2024</p></div></div>
     </div>
-    <div class="cert-cards cert-cards--collapsed">
-      <div class="cert-card" style="--cert-color:#1d1d1f;">
-        <div class="cert-card-bar"></div>
-        <div class="cert-card-body">
-          <p class="cert-card-category">Stratégie mobile</p>
-          <p class="cert-card-title">LXP Singapore : Mobile Strategy</p>
-          <p class="cert-card-date">Mars 2023</p>
-        </div>
-      </div>
+
+    <div data-platform="sololearn">
+      <div class="cert-card" style="--cert-color:#149EF2;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Développement web</p><p class="cert-card-title">HTML</p><p class="cert-card-date">Nov. 2019</p></div></div>
+      <div class="cert-card" style="--cert-color:#149EF2;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Développement web</p><p class="cert-card-title">CSS</p><p class="cert-card-date">Nov. 2019</p></div></div>
+      <div class="cert-card" style="--cert-color:#149EF2;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Développement web</p><p class="cert-card-title">JavaScript</p><p class="cert-card-date">Fév. 2021</p></div></div>
+      <div class="cert-card" style="--cert-color:#149EF2;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Développement web</p><p class="cert-card-title">jQuery</p><p class="cert-card-date">Fév. 2021</p></div></div>
     </div>
+
+    <div data-platform="toeic">
+      <div class="cert-card" style="--cert-color:#1a7a4a;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Langue</p><p class="cert-card-title">TOEIC Listening &amp; Reading — 765/990</p><p class="cert-card-date">Avr. 2024 · valide jusqu'en avr. 2026</p></div></div>
+    </div>
+
+    <div data-platform="nextu">
+      <div class="cert-card" style="--cert-color:#1d1d1f;"><div class="cert-card-bar"></div><div class="cert-card-body"><p class="cert-card-category">Stratégie mobile</p><p class="cert-card-title">LXP Singapore : Mobile Strategy</p><p class="cert-card-date">Mars 2023</p></div></div>
+    </div>
+
   </div>
 
 </section>
