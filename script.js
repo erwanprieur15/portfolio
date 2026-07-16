@@ -444,9 +444,10 @@ document.addEventListener('DOMContentLoaded', function () {
     track.addEventListener('touchend', e => {
       if (!dragging) return;
       dragging = false;
-      const dx = e.changedTouches[0].clientX - dragStartX;
-      if (Math.abs(dx) > 16) {
-        snapTo(extSlot + (dx < 0 ? 1 : -1), true);
+      const dx    = e.changedTouches[0].clientX - dragStartX;
+      const rawX  = dragStartOff + dx;
+      if (Math.abs(dx) > 8) {
+        snapTo(nearestSlot(rawX), true);
       } else {
         applyTrack(offsetFor(extSlot), true);
       }
@@ -468,9 +469,10 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('mouseup', e => {
       if (!dragging) return;
       dragging = false;
-      const dx = e.clientX - dragStartX;
-      if (Math.abs(dx) > 16) {
-        snapTo(extSlot + (dx < 0 ? 1 : -1), true);
+      const dx   = e.clientX - dragStartX;
+      const rawX = dragStartOff + dx;
+      if (Math.abs(dx) > 8) {
+        snapTo(nearestSlot(rawX), true);
       } else {
         applyTrack(offsetFor(extSlot), true);
       }
