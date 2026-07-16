@@ -306,6 +306,213 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // ---------- Certifications mobile wheel (infinie, 5 logos visibles) ----------
+  (function () {
+    const wheelMobile = document.getElementById('cert-wheel-mobile');
+    const track       = document.getElementById('cert-wheel-track');
+    if (!wheelMobile || !track) return;
+
+    const platforms = ['google','hubspot','semrush','openclassrooms','sololearn','toeic','nextu'];
+    const positions = [
+      { x: '-240px', y: '20px',  rot: '-3.5deg', z: 20 },
+      { x: '-160px', y: '35px',  rot: '-2deg',   z: 30 },
+      { x: '-80px',  y: '10px',  rot: '-1deg',   z: 40 },
+      { x: '0px',    y: '28px',  rot: '0deg',    z: 50 },
+      { x: '80px',   y: '8px',   rot: '1deg',    z: 40 },
+      { x: '160px',  y: '38px',  rot: '2deg',    z: 30 },
+      { x: '240px',  y: '16px',  rot: '3.5deg',  z: 20 },
+    ];
+
+    const n        = platforms.length;  // 7
+    const BUFFER   = 2;                 // clones de chaque côté
+    const DOT_W    = 38;
+    const DOT_GAP  = 10;
+    const DOT_STEP = DOT_W + DOT_GAP;  // 48px
+
+    // Tableau étendu : [5,6, 0,1,2,3,4,5,6, 0,1]  (11 éléments)
+    const extList = [
+      ...platforms.slice(-BUFFER),
+      ...platforms,
+      ...platforms.slice(0, BUFFER),
+    ];
+
+    let currentIdx   = 3;              // openclassrooms au centre au départ
+    let extSlot      = BUFFER + currentIdx; // slot étendu = 5
+    let trackOffset  = 0;
+    let dragStartX   = 0;
+    let dragStartOff = 0;
+    let dragging     = false;
+    let snapping     = false;
+
+    // Construction des dots
+    extList.forEach((platform, i) => {
+      const fc = document.querySelector(`.cert-fan-card[data-platform="${platform}"]`);
+      if (!fc) return;
+      const dot = document.createElement('div');
+      dot.className = 'cert-wheel-dot' + (i === extSlot ? ' active' : '');
+      const logoEl = fc.querySelector('.cert-fan-logo');
+      if (logoEl) dot.appendChild(logoEl.cloneNode(true));
+      dot.addEventListener('click', () => { if (!dragging) snapTo(i, true); });
+      track.appendChild(dot);
+    });
+
+    function halfWrap() {
+      const wrap = wheelMobile.querySelector('.cert-wheel-wrap');
+      return (wrap ? wrap.offsetWidth : 230) / 2;
+    }
+
+    function offsetFor(slot) {
+      return halfWrap() - slot * DOT_STEP - DOT_W / 2;
+    }
+
+    function applyTrack(x, animate) {
+      track.style.transition = animate ? 'transform 0.32s cubic-bezier(.22,1,.36,1)' : 'none';
+      track.style.transform  = 'translateX(' + x + 'px)';
+      trackOffset = x;
+    }
+
+    function updateActive() {
+      track.querySelectorAll('.cert-wheel-dot').forEach((d, i) => d.classList.toggle('active', i === extSlot));
+    }
+
+    function rotateFan(idx) {
+      const certFan = document.getElementById('cert-fan');
+      if (!certFan) return;
+      certFan.classList.add('cert-fan--rotating');
+      document.querySelectorAll('.cert-fan-card').forEach(card => {
+        const pi = platforms.indexOf(card.dataset.platform);
+        if (pi === -1) return;
+        const posIdx = ((pi - idx + 3 + n) % n);
+        const pos    = positions[posIdx];
+        card.style.setProperty('--fan-x',   pos.x);
+        card.style.setProperty('--fan-y',   pos.y);
+        card.style.setProperty('--fan-rot', pos.rot);
+        card.style.setProperty('--fan-z',   pos.z);
+        card.classList.toggle('cert-fan-card--centered', posIdx === 3);
+      });
+      setTimeout(() => certFan.classList.remove('cert-fan--rotating'), 700);
+    }
+
+    function snapTo(targetSlot, animate) {
+      if (snapping) return;
+      extSlot    = targetSlot;
+      currentIdx = ((extSlot - BUFFER) % n + n) % n;
+      applyTrack(offsetFor(extSlot), animate);
+      updateActive();
+      rotateFan(currentIdx);
+
+      // Saut silencieux si on atteint un clone
+      if (animate) {
+        snapping = true;
+        setTimeout(() => {
+          snapping = false;
+          if (extSlot < BUFFER) {
+            extSlot += n;
+            applyTrack(offsetFor(extSlot), false);
+            updateActive();
+          } else if (extSlot >= BUFFER + n) {
+            extSlot -= n;
+            applyTrack(offsetFor(extSlot), false);
+            updateActive();
+          }
+        }, 350);
+      }
+    }
+
+    // Déterminer le slot cible après un drag
+    function nearestSlot(rawX) {
+      const half  = halfWrap();
+      const slot  = Math.round((half - DOT_W / 2 - rawX) / DOT_STEP);
+      return Math.max(0, Math.min(extList.length - 1, slot));
+    }
+
+    // Touch
+    track.addEventListener('touchstart', e => {
+      if (snapping) return;
+      dragging     = true;
+      dragStartX   = e.touches[0].clientX;
+      dragStartOff = trackOffset;
+      track.style.transition = 'none';
+    }, { passive: true });
+
+    track.addEventListener('touchmove', e => {
+      if (!dragging) return;
+      const x = dragStartOff + (e.touches[0].clientX - dragStartX);
+      track.style.transform = 'translateX(' + x + 'px)';
+    }, { passive: true });
+
+    track.addEventListener('touchend', e => {
+      if (!dragging) return;
+      dragging = false;
+      const dx = e.changedTouches[0].clientX - dragStartX;
+      if (Math.abs(dx) > 16) {
+        snapTo(extSlot + (dx < 0 ? 1 : -1), true);
+      } else {
+        applyTrack(offsetFor(extSlot), true);
+      }
+    });
+
+    // Mouse
+    track.addEventListener('mousedown', e => {
+      if (snapping) return;
+      dragging     = true;
+      dragStartX   = e.clientX;
+      dragStartOff = trackOffset;
+      track.style.transition = 'none';
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      track.style.transform = 'translateX(' + (dragStartOff + e.clientX - dragStartX) + 'px)';
+    });
+    window.addEventListener('mouseup', e => {
+      if (!dragging) return;
+      dragging = false;
+      const dx = e.clientX - dragStartX;
+      if (Math.abs(dx) > 16) {
+        snapTo(extSlot + (dx < 0 ? 1 : -1), true);
+      } else {
+        applyTrack(offsetFor(extSlot), true);
+      }
+    });
+
+    // Init
+    requestAnimationFrame(() => {
+      applyTrack(offsetFor(extSlot), false);
+      updateActive();
+    });
+  })();
+
+  // ---------- Hero avatar — zoom au scroll ----------
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const avatar  = document.querySelector('.hero-avatar');
+    const heroSec = document.getElementById('hero');
+
+    if (avatar && heroSec) {
+      function updateAvatarZoom() {
+        const scrollY  = window.pageYOffset;
+        const heroH    = heroSec.offsetHeight;
+        const progress = Math.min(scrollY / (heroH * 0.72), 1);
+
+        if (progress <= 0) {
+          avatar.style.transform = '';
+          avatar.style.opacity   = '';
+          return;
+        }
+
+        const scale    = 1 + progress * 4;
+        const moveUp   = progress * 320;
+        const opacity  = Math.max(0, 1 - progress * 1.6);
+
+        avatar.style.transform = `translateY(-${moveUp}px) scale(${scale})`;
+        avatar.style.opacity   = opacity;
+      }
+
+      window.addEventListener('scroll', updateAvatarZoom, { passive: true });
+      updateAvatarZoom();
+    }
+  }
+
   // ---------- Mobile nav toggle ----------
   const toggle = document.querySelector('.nav-mobile-toggle');
   const navLinks = document.querySelector('.nav-links');
