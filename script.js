@@ -117,28 +117,190 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // ---------- Certifications accordion ----------
-  const certToggles = document.querySelectorAll('.cert-toggle');
-  certToggles.forEach(toggle => {
-    toggle.addEventListener('click', () => {
-      const platform = toggle.closest('.cert-platform');
-      const cards = platform.querySelector('.cert-cards');
-      const isOpen = platform.classList.contains('cert-platform--open');
-      // Close all
-      document.querySelectorAll('.cert-platform').forEach(p => {
-        p.classList.remove('cert-platform--open');
-        p.querySelector('.cert-cards').classList.add('cert-cards--collapsed');
+  // ---------- Certifications fan gallery ----------
+  const certFan = document.getElementById('cert-fan');
+
+  // Trigger spread animation when the fan scrolls into view
+  if (certFan) {
+    const spreadObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => certFan.classList.add('cert-fan--spread'), 150);
+          spreadObserver.disconnect();
+        }
       });
-      // Open clicked if it was closed
-      if (!isOpen) {
-        platform.classList.add('cert-platform--open');
-        cards.classList.remove('cert-cards--collapsed');
+    }, { threshold: 0.2 });
+    spreadObserver.observe(certFan);
+  }
+
+  // Platform metadata for the panel header
+  const certMeta = {
+    google:         { label: 'Google',          bg: '#f1f3f4', count: '10 certifications' },
+    hubspot:        { label: 'HubSpot Academy', bg: '#fff3f0', count: '6 certifications'  },
+    semrush:        { label: 'SEMrush Academy', bg: '#fff5e6', count: '1 certification'   },
+    openclassrooms: { label: 'OpenClassrooms',  bg: '#f0ebff', count: '17 certifications' },
+    sololearn:      { label: 'SoloLearn',       bg: '#e8f4fe', count: '4 certifications'  },
+    toeic:          { label: 'TOEIC — ETS',     bg: '#e8f5e9', count: '1 certification'   },
+    nextu:          { label: 'NEXT-U — MBA',    bg: '#f5f5f7', count: '1 certification'   },
+  };
+
+  const certStore     = document.getElementById('cert-store');
+  const certPanel     = document.getElementById('cert-panel');
+  const certPanelCards = document.getElementById('cert-panel-cards');
+  const certPanelTitle = document.getElementById('cert-panel-title');
+  const certPanelSub   = document.getElementById('cert-panel-sub');
+  const certPanelIcon  = document.getElementById('cert-panel-icon');
+  const certPanelClose = document.getElementById('cert-panel-close');
+
+  document.querySelectorAll('.cert-fan-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const platform = card.dataset.platform;
+      const isActive = card.classList.contains('cert-fan-card--active');
+
+      // Deselect all
+      document.querySelectorAll('.cert-fan-card').forEach(c => c.classList.remove('cert-fan-card--active'));
+
+      if (isActive) {
+        // Clicking the active card closes the panel
+        certPanel.classList.remove('cert-panel--open');
+        return;
       }
-    });
-    toggle.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.click(); }
+
+      // Select clicked card
+      card.classList.add('cert-fan-card--active');
+
+      // Update panel header
+      const meta = certMeta[platform] || {};
+      if (certPanelTitle) certPanelTitle.textContent = meta.label || platform;
+      if (certPanelSub)   certPanelSub.textContent   = meta.count  || '';
+      if (certPanelIcon) {
+        const logoEl = card.querySelector('.cert-fan-logo');
+        if (logoEl) {
+          certPanelIcon.innerHTML = logoEl.innerHTML;
+          certPanelIcon.style.background = meta.bg || '#f5f5f7';
+        }
+      }
+
+      // Inject cert cards from hidden store
+      const dataEl = certStore ? certStore.querySelector(`[data-platform="${platform}"]`) : null;
+      if (certPanelCards && dataEl) {
+        certPanelCards.innerHTML = dataEl.innerHTML;
+      }
+
+      // Open panel
+      certPanel.classList.add('cert-panel--open');
+
+      // Smooth scroll to panel
+      setTimeout(() => {
+        const navH = document.querySelector('.nav')?.offsetHeight || 64;
+        const top  = certPanel.getBoundingClientRect().top + window.pageYOffset - navH - 20;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }, 350);
     });
   });
+
+  if (certPanelClose) {
+    certPanelClose.addEventListener('click', () => {
+      certPanel.classList.remove('cert-panel--open');
+      document.querySelectorAll('.cert-fan-card').forEach(c => c.classList.remove('cert-fan-card--active'));
+    });
+  }
+
+  // ---------- Hero canvas background ----------
+  const heroCanvas = document.getElementById('hero-canvas');
+  if (heroCanvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const ctx   = heroCanvas.getContext('2d');
+    const SPEED    = 0.28;
+    const MAX_DIST = 140;
+    const DOT_R    = 1.6;
+    let W, H, particles, raf;
+
+    function particleCount() {
+      return window.innerWidth < 600 ? 28 : window.innerWidth < 1024 ? 45 : 65;
+    }
+
+    function resize() {
+      W = heroCanvas.width  = heroCanvas.offsetWidth;
+      H = heroCanvas.height = heroCanvas.offsetHeight;
+    }
+
+    function makeParticle() {
+      return {
+        x:  Math.random() * W,
+        y:  Math.random() * H,
+        vx: (Math.random() - 0.5) * SPEED * 2,
+        vy: (Math.random() - 0.5) * SPEED * 2,
+      };
+    }
+
+    function init() {
+      resize();
+      particles = Array.from({ length: particleCount() }, makeParticle);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+      });
+
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx   = particles[i].x - particles[j].x;
+          const dy   = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < MAX_DIST) {
+            const alpha = (1 - dist / MAX_DIST) * 0.18;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = 'rgba(12,68,124,' + alpha.toFixed(3) + ')';
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, DOT_R, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(12,68,124,0.22)';
+        ctx.fill();
+      });
+
+      raf = requestAnimationFrame(draw);
+    }
+
+    init();
+    draw();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        cancelAnimationFrame(raf);
+        init();
+        draw();
+      }, 200);
+    });
+
+    // Pause when hero scrolls out of view (perf)
+    const heroEl = document.getElementById('hero');
+    if (heroEl) {
+      new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          if (!raf) { raf = requestAnimationFrame(draw); }
+        } else {
+          cancelAnimationFrame(raf);
+          raf = null;
+        }
+      }, { threshold: 0 }).observe(heroEl);
+    }
+  }
 
   // ---------- Mobile nav toggle ----------
   const toggle = document.querySelector('.nav-mobile-toggle');
